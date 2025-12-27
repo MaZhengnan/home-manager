@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+echo "🚀 Starting Nix + Home Manager + Dotfiles setup..."
+
+# 1. 确保在正确的目录
+cd ~/.config/home-manager
+
+# 2. 复制 nix.conf
+echo "📋 Setting up Nix configuration..."
+mkdir -p ~/.config/nix
+cp nix.conf ~/.config/nix/nix.conf
+
+# 3. 首次构建（使用 Flake）
+echo "🏗️  Building Home Manager configuration..."
+if command -v home-manager &> /dev/null; then
+    home-manager switch --flake .#mzn
+else
+    echo "⚠️  Home Manager not found. Installing..."
+    nix run home-manager/master -- switch --flake .#mzn
+fi
+
+echo "✅ Setup complete! Your dotfiles are now linked."
+echo "📁 Dotfiles location: ~/.config/home-manager/dotfiles/"

@@ -1,0 +1,33 @@
+
+
+* nix install
+#+begin_src shell
+    https://github.com/DeterminateSystems/nix-installer
+    https://tech.aufomm.com/my-nix-journey-use-nix-with-ubuntu/#Updates-garbage-collect
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+    
+#+end_src
+run
+#+begin_src shell
+    nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz home-manager
+    nix-channel --update
+    or
+    nix run home-manager/master -- init --switch
+
+    cd .config/home-manager/
+    home-manager switch --flake .#mzn
+#+end_src
+
+./nix/nix.conf file
+#+begin_src ini
+    experimental-features = nix-command flakes
+#+end_src
+
+* i3
+I don't know how to do.
+
+reference
+#+begin_src 
+https://github.com/MDiaznf23/simple-autoricing-i3wm-dotfiles
+
+#+end_src>

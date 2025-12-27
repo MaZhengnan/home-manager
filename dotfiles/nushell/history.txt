@@ -1,0 +1,135 @@
+ll
+ls -la
+fc-list | grep -i jetbrains
+fc-list : family | grep -i jetbrains
+fc-list : family | grep -i nerd
+fc-list : family | grep -i nerdfont
+fc-list | grep -i nerd
+cd ~/.nix-profile
+ls -la
+cd share
+ls -la
+cd fonts/
+ls -la
+cd  truetype
+ls -a
+cd NerdFonts/
+ls -a
+fc-list cache
+emacs
+fc-cache -fv ~/.nix-profile/share/fonts
+emacs
+cd ~/.config/home-manager/dotfiles/
+cd emacs/
+ll
+ls -a
+cd core/
+ls -a
+vim init-appearance.el
+emacs
+vim init-appearance.el
+sudo fc-cache -f -v
+fc-cache -fv
+emacs
+fc-list | grep -i jetbrains
+cd ~/.nix-profile/share/fonts/truetype/NerdFonts/JetBrainsMono/
+ls -a
+fc-cache -fv 2>&1 | grep -i jetbrains
+ls
+cd ..
+cd ~
+ls -a
+hm
+home-manager switch --flake .#mzn
+exit
+cd .config/
+exit
+which nu
+exit
+hm
+nix
+nu
+home-manager switch --flake .#mzn
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+sudo apt autoremove
+exit
+sudo apt list
+sudo apt list | grep nushell
+sudo apt list | grep nu
+nix store gc
+nushell
+exit
+cd ..
+cd mzn
+ll
+la
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+exit
+nu
+exit
+cd home-manager/
+home-manager switch --flake .#mzn
+nix store gc
+clash
+clash-verge
+clash-verge-rev
+clash-verg
+clash-verge
+sudo apt install clash-verge
+home-manager switch --flake .#mzn
+nix store gc
+ls -a
+emacs
+exit
+cd .config/home-manager/
+ls -a
+git config --global user.name "MaZhengnan"
+git config --global user.email "mzn836443465@163.com"
+git init
+ls -la
+git add .
+exit
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+alacrity
+alacritty
+home-manager switch --flake .#mzn
+lspci | grep -E "VGA|3D"
+glxinfo | grep -i render
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+picom
+picom -v
+polybar -v
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+kitty
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+cd /mnt
+ll
+ls -a
+cd hgfs/
+ls -a
+ls -la
+mkdir .ccc
+sudo mkdir .ccc
+ls -a
+cd ..
+ls -la
+cd hgfs/
+ls -la
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+i3
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+cd ..
+ls -la
+cd .config/home-manager/
