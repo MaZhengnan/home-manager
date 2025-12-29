@@ -116,3 +116,4 @@
 # # ========== 快捷键提示 ==========
 # #
  #print $"(ansi dim)提示: Ctrl+R 搜索历史 | Ctrl+D 退出 | Tab 补全(ansi reset)"
+source $"($nu.home-path)/.cargo/env.nu"

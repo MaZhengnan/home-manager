@@ -18,17 +18,17 @@
     kitty
 	alacritty
 	ghostty
-	conky
-	dunst
-	eww
-	pcmanfm
+	# conky
+	# dunst
+	# eww
+	# pcmanfm
 	neovim
     git
     nushell
     emacs
-	polybar
-	picom
-	rofi
+	# polybar
+	# picom
+	# rofi
     nerd-fonts.jetbrains-mono
     wqy_microhei
   ];

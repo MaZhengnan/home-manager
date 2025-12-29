@@ -14,6 +14,7 @@ let
     ".config/pcmanfm" = "i3wm/pcmanfm";
     ".config/rofi" = "i3wm/rofi";
     ".config/polybar" = "i3wm/polybar";
+    ".config/picom" = "i3wm/picom";
     ".config/nushell" = "nushell";
     ".emacs.d" = "emacs";
     ".gitconfig" = "git/.gitconfig";

@@ -1,223 +1,114 @@
-# i3 config file (v4)
-#
-# Please see https://i5wm.org/docs/userguide.html for a complete reference!
+# ============================================
+# i3 配置文件 (v4)
+# 整理优化版
+# ============================================
 
-# Border configuration
+# ---------- 基础设置 ----------
+set $mod Mod4
+font pango:JetbrainsMono NF 10
+
+# 边框设置
 set $thick 2
-
-# DEFAULT BORDER
 for_window [class="^.*"] border pixel $thick
-for_window [title="^.*"] border pixel $thick
 for_window [class="Eww"] border none
 for_window [class="conky"] border none
 
-# APPLICATION BORDERS
+# 特定应用边框
 for_window [class="Emacs"] border pixel $thick
 for_window [class="URxvt"] border pixel $thick
 for_window [class="st"] border pixel $thick
-#for_window [class="XTerm"] border pixel $thick
 
-# workspace_auto_back_and_forth no
-# focus_follows_mouse no
-# smart_borders on
-
-# FLOATING APPLICATIONS
-# for_window [class="Megasync"] floating enable
-# for_window [class="Pavucontrol"] floating enable
-# for_window [class="Lxappearance"] floating enable
+# 浮动窗口设置
 for_window [class="Blueman-manager"] floating enable
-for_window [class="eww"] floating enable
-for_window [class="eww"] sticky enable
+for_window [class="eww"] floating enable, sticky enable
 for_window [class="mpv"] floating enable
 for_window [class="conky"] floating enable, sticky enable, border none
 
-set $mod Mod4
+# ---------- 自动启动 ----------
+# 显示相关
+exec_always --no-startup-id /usr/bin/vmware-user-suid-wrapper
+exec_always --no-startup-id picom
+#exec_always --no-startup-id /bin/bash -c "sleep 3 && /home/mzn/.config/polybar/launch.sh 2>&1 | tee /tmp/i3-polybar.log"
+exec --no-startup-id ~/.config/i3/autostart.sh
 
-# Set colors from Xresources
-# Change 'color7' and 'color2' to whatever colors you want i3 to use 
-# from the generated scheme.
-# NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
-# it fails to get colors from Xresources.
-set_from_resource $fg i3wm.color7 #f0f0f0
-set_from_resource $bg i3wm.color2 #f0f0f0
+# ---------- 应用程序启动快捷键 ----------
+# 启动终端 (当前工作区)
+bindsym $mod+Return exec i3-sensible-terminal
 
-# class                 border  backgr. text indicator child_border
-client.focused          $bg     $bg     $fg  $bg       $bg
-client.focused_inactive $bg     $bg     $fg  $bg       $bg
-client.unfocused        $bg     $bg     $fg  $bg       $bg
-client.urgent           $bg     $bg     $fg  $bg       $bg
-client.placeholder      $bg     $bg     $fg  $bg       $bg
+# 启动浏览器
+bindsym $mod+b exec firefox
+# Rofi 应用启动器
+bindsym $mod+d exec rofi -show drun -theme ~/.config/rofi/themes/rounded-nord-dark.rasi
+bindsym $mod+Shift+d exec rofi -show run
+#bindsym $mod+w exec rofi -show window
+# 剪贴板工具
+bindsym $mod+c exec xclip -selection clipboard
+bindsym $mod+p exec xclip -selection clipboard -o
 
-client.background       $bg
-
-# gaps inner 10
-# gaps outer 5 
-# gaps top 42   
-# gaps bottom 5
-
-# PROTIP: You can also dynamically set dmenu's colors this way:
-bindsym $mod+d exec ~/.config/rofi/launchers/type-6/launcher.sh
-
-# Workspace cycling with looping
-#bindsym Ctrl+Mod4+Right exec --no-startup-id ~/.config/Scripts/ws_cycle.py next
-#bindsym Ctrl+Mod4+Left exec --no-startup-id ~/.config/Scripts/ws_cycle.py prev
-
-# Locker
-bindsym $mod+l exec --no-startup-id lock
-
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +1%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -1% 
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle 
-
-# Sreen brightness controls
-#bindsym $mod+Ctrl+Up exec --no-startup-id brightnessctl set +10% && brightnessctl get > ~/.config/brightness_level
-#bindsym $mod+Ctrl+Down exec --no-startup-id brightnessctl set 10%- && brightnessctl get > ~/.config/brightness_level
-
-# is used in the bar {} block below.
-#font terminess:monospace 9
-
-# is used in the bar {} block below.
-#font terminess:monospace 9
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu JetbrainsMono NF 10
-
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal 
-
-# start file manager
-bindsym $mod+Shift+f exec pcmanfm
-
-# start powermenu
-bindsym $mod+Shift+e exec ~/.config/rofi/powermenu/type-5/powermenu.sh
-
-# start wpg
-bindsym $mod+Shift+b exec ~/.config/rofi/wpg-select.sh
-
-# Multi-screen screenshots with scrot
-bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/Screenshots && mv $f ~/Pictures/Screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/Screenshots/`ls -1 -t ~/Pictures/Screenshots | head -1`'
-
-# OSX-like area selection screenshots
-bindsym --release $mod+Shift+s exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/Screenshots && mv $f ~/Pictures/Screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/Screenshots/`ls -1 -t ~/Pictures/Screenshots | head -1`' 
-
-# kill focused window
-bindsym $mod+Shift+q kill
-
-# change focus
+# ---------- 窗口焦点控制 ----------
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
-# alternatively, you can use the cursor keys:
+# ---------- 窗口移动 ---------- 
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
+# ---------- 布局控制 ----------
 bindsym $mod+h split h
-
-# split in vertical orientation
 bindsym $mod+v split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
-
-# focus the parent container
 bindsym $mod+a focus parent
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+space floating toggle
 
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
+# ---------- 工作区设置 ----------
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
 
-# toggle tiling / floating
-bindsym $mod+Shift+v floating toggle
-
-# switch to workspace
+# 切换工作区
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
 bindsym $mod+4 workspace $ws4
 bindsym $mod+5 workspace $ws5
 
-# move focused container to workspace
+# 移动窗口到工作区
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
 bindsym $mod+Shift+4 move container to workspace $ws4
 bindsym $mod+Shift+5 move container to workspace $ws5
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-
-# resize window (you can also use the mouse for that)
+# ---------- 窗口调整模式 ----------
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+    
+    # 返回正常模式
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
 }
-
 bindsym $mod+r mode "resize"
 
-# Start polybar to display a workspace bar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# ---------- 系统控制 ----------
+# 关闭窗口
+bindsym $mod+q kill
 
-# Initial commands that execute on i3 start.
-exec_always --no-startup-id picom
-exec_always --no-startup-id killall conky; sleep 1 && ~/.config/conky/conky-wal.sh
-exec_always --no-startup-id setxkbmap -layout "us,ru" -option "grp:win_space_toggle"
+# 重新加载配置
+bindsym $mod+Shift+c reload
 
-# Browser binding
-bindsym $mod+b exec firefox
-
-# Autostart
-exec_always --no-startup-id ~/.config/i3/autostart.sh
+# 重启 i3
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+q exec "gdmflexiserver --startnew"

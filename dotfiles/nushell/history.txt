@@ -133,3 +133,8 @@ home-manager switch --flake .#mzn
 cd ..
 ls -la
 cd .config/home-manager/
+home-manager switch --flake .#mzn
+cd .config/home-manager/
+home-manager switch --flake .#mzn
+cd .config/home-manager/
+home-manager switch --flake .#mzn

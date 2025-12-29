@@ -1,24 +1,140 @@
 #!/bin/bash
 set -e
 
-echo "🚀 Starting Nix + Home Manager + Dotfiles setup..."
+echo "==========================================="
+echo "🚀 i3 桌面环境快速安装脚本"
+echo "==========================================="
 
-# 1. 确保在正确的目录
-cd ~/.config/home-manager
+# 1. 安装桌面环境核心组件
+echo "📦 第1步：安装桌面环境核心组件..."
+sudo apt update
+sudo apt install -y \
+    i3 \
+    polybar \
+    picom \
+    rofi \
+    conky-all \
+    pcmanfm \
+    dunst \
+    feh \
+    arandr \
+    lxappearance \
+    xclip \
+    xsel \
+    fonts-jetbrains-mono \
+    fonts-font-awesome \
+    papirus-icon-theme \
+    htop \
+    git \
+    curl \
+    wget
 
-# 2. 复制 nix.conf
-echo "📋 Setting up Nix configuration..."
-mkdir -p ~/.config/nix
-cp nix.conf ~/.config/nix/nix.conf
+echo "✅ 桌面环境组件安装完成！"
 
-# 3. 首次构建（使用 Flake）
-echo "🏗️  Building Home Manager configuration..."
-if command -v home-manager &> /dev/null; then
-    home-manager switch --flake .#mzn
+# 2. 安装 Nix (使用 Determinate Systems 安装器)
+echo "📦 第2步：安装 Nix 包管理器..."
+if ! command -v nix &> /dev/null; then
+    echo "正在下载并安装 Nix..."
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+    echo 'source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' >> ~/.bashrc
+    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+    echo "✅ Nix 安装完成"
 else
-    echo "⚠️  Home Manager not found. Installing..."
-    nix run home-manager/master -- switch --flake .#mzn
+    echo "✅ Nix 已安装"
 fi
 
-echo "✅ Setup complete! Your dotfiles are now linked."
-echo "📁 Dotfiles location: ~/.config/home-manager/dotfiles/"
+# 3. 从 GitHub 下载配置仓库
+echo "📥 第3步：下载配置文件..."
+CONFIG_DIR="$HOME/.config/home-manager"
+GITHUB_REPO="https://github.com/YOUR_USERNAME/YOUR_REPO.git"  # 请替换为您的仓库地址
+
+if [ -d "$CONFIG_DIR" ]; then
+    echo "⚠️  配置文件目录已存在，更新中..."
+    cd "$CONFIG_DIR"
+    git pull origin main
+else
+    echo "正在克隆配置仓库..."
+    git clone "$GITHUB_REPO" "$CONFIG_DIR"
+    cd "$CONFIG_DIR"
+fi
+
+echo "✅ 配置文件下载完成"
+
+# 4. 复制 nix.conf 配置文件
+echo "⚙️  第4步：配置 Nix..."
+mkdir -p ~/.config/nix
+if [ -f "$CONFIG_DIR/nix.conf" ]; then
+    cp "$CONFIG_DIR/nix.conf" ~/.config/nix/nix.conf
+    echo "✅ nix.conf 已复制到 ~/.config/nix/"
+else
+    echo "⚠️  警告：未找到 nix.conf 文件"
+fi
+
+# 5. 检查并安装 Home Manager
+echo "🏠 第5步：安装 Home Manager..."
+if ! command -v home-manager &> /dev/null; then
+    echo "正在安装 Home Manager..."
+    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    nix-channel --update
+    export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
+    nix-shell '<home-manager>' -A install
+    echo "✅ Home Manager 安装完成"
+else
+    echo "✅ Home Manager 已安装"
+fi
+
+# 6. 应用 Home Manager 配置
+echo "🔧 第6步：应用配置..."
+cd "$CONFIG_DIR"
+echo "当前目录：$(pwd)"
+
+if [ -f "flake.nix" ]; then
+    echo "使用 flake 配置..."
+    home-manager switch --flake .#mzn
+else
+    echo "使用传统配置..."
+    home-manager switch
+fi
+
+echo "==========================================="
+echo "🎉 安装完成！"
+echo ""
+echo "📋 已安装的软件："
+echo "   • i3 窗口管理器"
+echo "   • Polybar 状态栏"
+echo "   • Picom 合成器"
+echo "   • Rofi 应用启动器"
+echo "   • Conky 系统监视器"
+echo "   • PCManFM 文件管理器"
+echo "   • Dunst 通知守护进程"
+echo "   • Nix 包管理器"
+echo "   • Home Manager"
+echo ""
+echo "🚀 使用方法："
+echo "   1. 注销当前会话"
+echo "   2. 在登录管理器中选择 'i3'"
+echo "   3. 或者从终端运行: startx"
+echo ""
+echo "⚙️  配置文件位置："
+echo "   ~/.config/home-manager/"
+echo ""
+echo "🔄 更新配置："
+echo "   cd ~/.config/home-manager"
+echo "   git pull"
+echo "   home-manager switch --flake .#mzn"
+echo "==========================================="
+
+# 可选：询问是否重启显示管理器
+read -p "是否要重启显示管理器？(y/N): " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if pgrep lightdm > /dev/null; then
+        sudo systemctl restart lightdm
+    elif pgrep gdm3 > /dev/null; then
+        sudo systemctl restart gdm3
+    elif pgrep sddm > /dev/null; then
+        sudo systemctl restart sddm
+    else
+        echo "请手动注销并重新登录"
+    fi
+fi

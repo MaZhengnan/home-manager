@@ -1,44 +1,97 @@
 [global]
-    script = ~/.config/polybar/scripts/dunst-update.sh
-    icon_theme = Adwaita
-    enable_recursive_icon_lookup = true
-    font = Monospace 10
-    markup = full
-    format = "<b>%s</b>\n%b"
+    # 显示设置
+    monitor = 0
+    follow = none  # 改为 none 固定位置
     
+    # 关键修改：显示在右上角，Polybar 下方
+    # 格式：widthxheight±x±y
+    # x: 正数从左边开始，负数从右边开始
+    # y: 正数从上边开始，负数从下边开始
+    geometry = "400x5-30+60"  # 宽度400px，距右30px，距顶60px（预留 Polybar 空间）
+    
+    # 或者使用百分比
+    # geometry = "400x5-5%+60"
+    
+    # 设置垂直偏移（Polybar 高度）
     origin = top-right
-    offset = 15x52
+    offset = "30x60"  # 水平偏移30px，垂直偏移60px
     
-    frame_width = 0
+    indicate_hidden = yes
+    shrink = no
+    transparency = 20
+    notification_height = 100
     separator_height = 2
-    separator_color = "#736047"
-    
-    corner_radius = 8
     padding = 12
     horizontal_padding = 12
+    frame_width = 2
+    frame_color = "#5294e2"
+    separator_color = frame
     
-    width = (280, 350)
+    # 排序和超时
+    sort = yes
+    idle_threshold = 120
+    ignore_newline = no
+    show_indicators = no
+    stack_duplicates = yes
+    hide_duplicate_count = no
+    show_age_threshold = 60
+    word_wrap = yes
+    ellipsize = middle
+    ignore_dbusclose = false
     
-    transparency = 0
-    gap_size = 6
+    # 字体
+    font = JetBrainsMono Nerd Font 10
+    line_height = 3
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
     
+    # 图标
     icon_position = left
     max_icon_size = 48
+    icon_path = /usr/share/icons/Papirus/48x48/apps/:/usr/share/icons/hicolor/48x48/apps/
+    
+    # 历史记录
+    sticky_history = yes
+    history_length = 20
+    
+    # 浏览器
+    browser = /usr/bin/firefox -new-tab
+    
+    # 始终在任务栏显示（Wayland）
+    force_xwayland = no
 
+# 保持原有的 urgency 设置不变
 [urgency_low]
-    background = "#090503CC"
-    foreground = "#c9baa7"
-    highlight = "#736047"
-    timeout = 5
+    background = "#383c4a"
+    foreground = "#d3dae3"
+    frame_color = "#5294e2"
+    timeout = 4
 
 [urgency_normal]
-    background = "#090503CC"
-    foreground = "#c9baa7"
-    highlight = "#94622F"
-    timeout = 10
+    background = "#2f343f"
+    foreground = "#ffffff"
+    frame_color = "#5294e2"
+    timeout = 6
 
 [urgency_critical]
-    background = "#736047CC"
-    foreground = "#090503"
-    highlight = "#090503"
+    background = "#900000"
+    foreground = "#ffffff"
+    frame_color = "#ff0000"
     timeout = 0
+
+# 应用特定规则（保持不变）
+[spotify]
+    appname = Spotify
+    urgency = low
+    format = "<b>%s</b>\n🎵 %b"
+    icon = ~/.config/dunst/icons/spotify.png
+
+[discord]
+    appname = Discord
+    urgency = normal
+    format = "<b>%s</b>\n💬 %b"
+
+[ignore]
+    appname = "Polybar"
