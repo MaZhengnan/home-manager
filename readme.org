@@ -1,33 +1,47 @@
+#+TITLE: Home-manager and i3 setup for Linux PC
+#+AUTHOR: ZhengnanMa(MZN)
 
+* Setup
 
-* nix install
-#+begin_src shell
-    https://github.com/DeterminateSystems/nix-installer
-    https://tech.aufomm.com/my-nix-journey-use-nix-with-ubuntu/#Updates-garbage-collect
-    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-    
-#+end_src
-run
-#+begin_src shell
-    nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz home-manager
-    nix-channel --update
-    or
-    nix run home-manager/master -- init --switch
+- Step 1: Install basic packages and i3 components.
+  #+begin_src sh
+      sudo apt install git wegt curl i3 polybar rofi picom pcmanfm conky feh
+  #+end_src
 
-    cd .config/home-manager/
-    home-manager switch --flake .#mzn
-#+end_src
+- Step 2: Using [[https://github.com/DeterminateSystems/nix-installer][nix-installer]] install nix.
+  #+begin_src sh
+      curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+  #+end_src
 
-./nix/nix.conf file
-#+begin_src ini
-    experimental-features = nix-command flakes
-#+end_src
+- Step 3: Install home manager.
+  #+begin_src sh
+      nix run home-manager/master -- init --switch
+  #+end_src
 
-* i3
-I don't know how to do.
+- Step 4: Open experience command.
+  #+begin_src sh
+      cd ~/.config
+      mkdir nix && cd nix
+      touch nix.conf
+  #+end_src
+  Write =experimental-features = nix-command flakes= into =nix.conf=.
+  
+- Step 5: Init my home-manager configuration.
+   #+begin_src sh
+       cd ~/.config/home-manager
+       rm -rf *
+       git clone https://github.com/MaZhengnan/home-manager.git .
+   #+end_src
 
-reference
-#+begin_src 
-https://github.com/MDiaznf23/simple-autoricing-i3wm-dotfiles
+- Step 6: Nix flake.
+   #+begin_src sh
+       home-manager switch --flake .#mzn -b ".backup"
+   #+end_src
 
-#+end_src>
+- Step 7: i3wm specific.
+   #+begin_src sh 
+       chmod +777 ~/.config/home-manager/scripts/i3-permission.sh
+       ~/.config/home-manager/scripts/i3-permission.sh
+   #+end_src
+
+- Done!
