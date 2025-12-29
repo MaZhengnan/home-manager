@@ -21,11 +21,7 @@ sudo apt install -y \
     lxappearance \
     xclip \
     xsel \
-    fonts-jetbrains-mono \
-    fonts-font-awesome \
-    papirus-icon-theme \
     htop \
-    git \
     curl \
     wget
 
@@ -36,32 +32,17 @@ echo "📦 第2步：安装 Nix 包管理器..."
 if ! command -v nix &> /dev/null; then
     echo "正在下载并安装 Nix..."
     curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-    echo 'source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' >> ~/.bashrc
-    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
     echo "✅ Nix 安装完成"
 else
     echo "✅ Nix 已安装"
 fi
 
-# 3. 从 GitHub 下载配置仓库
-echo "📥 第3步：下载配置文件..."
 CONFIG_DIR="$HOME/.config/home-manager"
-GITHUB_REPO="https://github.com/YOUR_USERNAME/YOUR_REPO.git"  # 请替换为您的仓库地址
-
-if [ -d "$CONFIG_DIR" ]; then
-    echo "⚠️  配置文件目录已存在，更新中..."
-    cd "$CONFIG_DIR"
-    git pull origin main
-else
-    echo "正在克隆配置仓库..."
-    git clone "$GITHUB_REPO" "$CONFIG_DIR"
-    cd "$CONFIG_DIR"
-fi
 
 echo "✅ 配置文件下载完成"
 
 # 4. 复制 nix.conf 配置文件
-echo "⚙️  第4步：配置 Nix..."
+echo "⚙️  第3步：配置 Nix..."
 mkdir -p ~/.config/nix
 if [ -f "$CONFIG_DIR/nix.conf" ]; then
     cp "$CONFIG_DIR/nix.conf" ~/.config/nix/nix.conf
@@ -71,20 +52,18 @@ else
 fi
 
 # 5. 检查并安装 Home Manager
-echo "🏠 第5步：安装 Home Manager..."
+echo "🏠 第4步：安装 Home Manager..."
 if ! command -v home-manager &> /dev/null; then
     echo "正在安装 Home Manager..."
     nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
     nix-channel --update
-    export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
-    nix-shell '<home-manager>' -A install
     echo "✅ Home Manager 安装完成"
 else
     echo "✅ Home Manager 已安装"
 fi
 
 # 6. 应用 Home Manager 配置
-echo "🔧 第6步：应用配置..."
+echo "🔧 第5步：应用配置..."
 cd "$CONFIG_DIR"
 echo "当前目录：$(pwd)"
 
