@@ -16,6 +16,7 @@ let
     ".config/polybar" = "i3wm/polybar";
     ".config/picom" = "i3wm/picom";
     ".config/nushell" = "nushell";
+    ".config/wezterm" = "wezterm";
     ".emacs.d" = "emacs";
     ".gitconfig" = "git/.gitconfig";
     ".bashrc" = "shell/.bashrc";

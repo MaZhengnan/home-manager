@@ -138,3 +138,169 @@ cd .config/home-manager/
 home-manager switch --flake .#mzn
 cd .config/home-manager/
 home-manager switch --flake .#mzn
+ls -la
+cd .config
+ls -la
+cd nushell
+ll
+cat config.nu
+cd .config/home-manager/
+cd ~/.config/home-manager/
+home-manager switch --flake .#mzn
+hm
+home-manager switch --flake .#mzn
+<\n>
+ll
+ls
+ls -a
+la
+ll
+cat nix.conf
+cat flake
+cat flake.nix
+hm
+cd ./dotfiles/
+ll
+mkdir -p systemd/user/
+mkdir systermd
+rm -rf systermd/
+mkdir systemd
+cd systemd 
+mkdir user
+cd user 
+touch link-desktop-files.service
+hm
+git add .<\n>git commit -m "Fix configuration" || true
+git add .
+git add .<\n>git commit -m "Fix configuration" || true
+git commit -m "Fix configuration" or true
+git commit -m "Fix configuration"
+hm
+$XDG_DATA_DIRS
+hm
+nix-channel --update
+hm
+nix flake update
+cd ~/.config/home-manager/
+nix flake update
+hm
+nix flake update
+hm
+cd ~/.config/home-manager/
+nix flake update
+hm
+nix flake update
+cd ~/.config/home-manager/
+hm
+sed -n '1,200p' ~/.nix-profile/share/applications/emacs.desktop
+emacs
+emacs & disown
+exit
+emacs & disown
+emacs
+hm
+cd ~/.config/home-manager/
+hm
+nix .
+nix flake update
+hm
+git add .
+hm
+cd ..
+ls -la
+rm -rf kitty
+hm
+kitty
+cd  ~
+kitty
+exit
+ll
+cat kitty
+hm
+ll
+rm -rf kitty
+hm
+ll
+kitty
+cd kitty
+cat kitty
+hm
+ll
+cd home-manager/dotfiles/
+ll
+cd home-manager/dotfiles/
+cd .config/home-manager/
+cd dotfiles/
+ll
+mv Kitty kitty
+ll
+hm
+cd ~/.config
+ll
+kitty
+kitty --config /dev/null --debug-rendering
+exit
+ghostty
+emacs
+cd ~/.config/nushell/
+vim config.nu
+emacs
+exit
+cd .config/
+vim config.nu
+bash emacs&disown
+bash "emacs & disown" 
+emacs;disown
+exit
+emacs
+exit
+emacs
+hm
+wezterm
+update
+sudo apt install -y \<\n>  libegl1 \<\n>  libgl1 \<\n>  mesa-utils \<\n>  mesa-utils-extra \<\n>  mesa-vulkan-drivers
+sudo apt install -y \<\n>  libegl1
+sudo apt install -y libgl1
+sudo apt install -y mesa-utils
+sudo apt install -y mesa-utils-extra
+sudo apt install -y mesa-vulkan-drivers
+wezterm
+ls /usr/lib*/libEGL.so*
+ghostty
+hm
+ghostty
+wezterm
+hm
+cd .config/
+ll
+cd ..
+cd .dotfiles/
+ll
+cd ghostty/
+ll
+ls
+cd ..
+cd ~/.config/home-manager/
+cd ~/.config
+ll
+..
+ll
+ls
+ll
+ls -la
+hm
+ll
+cd ~/.config
+ll
+la
+ls
+hm
+rm -rf ghostty
+hm
+wezterm
+sudo apt install -y \<\n>    libegl1
+hm
+wezterm
+hm
+nix store gc
+wezterm

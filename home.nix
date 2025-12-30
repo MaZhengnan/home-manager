@@ -1,42 +1,48 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, pkgsUnstable, lib, ... }:
 
 {
   imports = [
-    ./modules/dotfiles.nix  # 导入自动链接模块
+    ./modules/dotfiles.nix
+    ./modules/gui.nix
   ];
 
-  home.username = "mzn";
-  home.homeDirectory = "/home/mzn";
-  home.stateVersion = "23.11";
-  fonts.fontconfig.enable = true;
-  #home.shell = pkgs.nushell;
-  #home.shell = "nu";
-  #home.shell.NIX_MAIN_PROGRAM = pkgs.nushell;
-  programs.nushell.enable = true;
-  # 只管理软件包安装
-  home.packages = with pkgs; [
-    kitty
-	alacritty
-	ghostty
-	# conky
-	# dunst
-	# eww
-	# pcmanfm
-	neovim
-    git
-    nushell
-    emacs
-	# polybar
-	# picom
-	# rofi
-    nerd-fonts.jetbrains-mono
-    wqy_microhei
+  home = {
+    username = "mzn";
+    homeDirectory = "/home/mzn";
+    stateVersion = "23.11";
+  };
+
+  # ===== XDG & GUI 环境 =====
+  xdg.enable = true;
+
+  # GUI 会话 PATH（修 rofi / GNOME 无法启动）
+  home.sessionPath = [
+    "$HOME/.nix-profile/bin"
+    "/nix/var/nix/profiles/default/bin"
   ];
+
+  fonts.fontconfig.enable = true;
+
   targets.genericLinux.enable = true;
-  
-  # 自动复制 nix.conf 到正确位置
-  home.file.".config/nix/nix.conf".source = ./nix.conf;
-  
-  # Home Manager 基础设置
+
+  # ===== 软件安装策略 =====
+  home.packages = [
+    # ---- 稳定工具 ----
+    pkgs.git
+    pkgs.nushell
+    pkgs.starship
+    pkgs.fzf
+    pkgs.eza
+    pkgs.bat
+    # ---- 追新工具（unstable）----
+    pkgsUnstable.neovim
+    pkgsUnstable.emacs
+	pkgsUnstable.wezterm
+    # ---- 字体 ----
+    pkgsUnstable.nerd-fonts.jetbrains-mono
+    pkgs.wqy_microhei
+  ];
+
+  # ===== Home Manager 自身 =====
   programs.home-manager.enable = true;
 }

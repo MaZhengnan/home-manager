@@ -1,0 +1,12 @@
+[Unit]
+Description=Link Home Manager desktop files
+After=default.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash -c 'mkdir -p ~/.local/share/applications && find ~/.nix-profile/share/applications -name "*.desktop" -exec ln -sf {} ~/.local/share/applications/ \\;'
+ExecStartPost=/bin/bash -c 'update-desktop-database ~/.local/share/applications'
+
+[Install]
+WantedBy=default.target
